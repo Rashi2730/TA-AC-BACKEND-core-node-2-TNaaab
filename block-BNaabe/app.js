@@ -11,11 +11,14 @@ function handleReq(req, res) {
   req.on('end', () => {
     if (dataFormat === 'application/json') {
       var parseddata = JSON.parse(store);
-      res.end(store);
+      res.setHeader('Content-Type', 'text/html');
+      res.end(`<h2>${parseddata.name}</h2><p>${parseddata.email}</p>`);
     }
     if (dataFormat === 'application/x-www-form-urlencoded') {
       var parseddata = qs.parse(store);
       res.end(JSON.stringify(parseddata));
+      res.setHeader('Content-Type', 'text/html');
+      res.end(`<h2>${parseddata.email}</h2>`);
     }
   });
 }
